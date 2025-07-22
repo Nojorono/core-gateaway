@@ -1,9 +1,8 @@
     [submodule "backend-md"]
-        path = backend-md
-        url = https://github.com/Nojorono/backend-md.git
+	path = backend-md
+	url = https://github.com/Nojorono/backend-md.git
         branch = main
-
-    [submodule "backend-ryo"]
-        path = backend-ryo
-        url = https://github.com/Nojorono/voucher_be.git
+[submodule "backend-ryo"]
+	path = backend-ryo
+	url = https://github.com/Nojorono/voucher_be.git
         branch = update-wholesales-tree
