@@ -1,4 +1,9 @@
 .env
-*/staticfiles
-/media
-*.old
+staticfiles/
+backend-ryo/staticfiles/
+*/staticfiles/
+media/
+backend-ryo/media/
+*/media/
+
+*-old*
