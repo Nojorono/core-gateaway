@@ -46,29 +46,26 @@ services:
     networks:
       - kong-net
 
-  # wms-backend:
-  #   image: kennethreitz/httpbin
-  #   container_name: wms-backend
-  #   ports:
-  #     - "9001:80"
-  #   networks:
-  #     - kong-net
+  backend-md:
+    build: ./backend-md
+    container_name: backend-md
+    environment:
+      - NODE_ENV=production
+      - PORT=9001
+    ports:
+      - "9001:9001"
+    networks:
+      - kong-net
 
-  # sofia-backend:
-  #   image: kennethreitz/httpbin
-  #   container_name: sofia-backend
-  #   ports:
-  #     - "9002:80"
-  #   networks:
-  #     - kong-net
-
-  # md-backend:
-  #   image: kennethreitz/httpbin
-  #   container_name: md-backend
-  #   ports:
-  #     - "9003:80"
-  #   networks:
-  #     - kong-net
+  backend-ryo:
+    build: ./backend-ryo
+    container_name: backend-ryo
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
+    ports:
+      - "9002:9002"
+    networks:
+      - kong-net
 
   prometheus:
     image: prom/prometheus
