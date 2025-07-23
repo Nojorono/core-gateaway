@@ -61,6 +61,9 @@ services:
     container_name: backend-ryo
     env_file:
       - ./backend-ryo/.env
+    volumes:
+      - ./backend/media:/app/media
+      - ./staticfiles:/app/staticfiles  # Mount for WSL Nginx access
     ports:
       - "9002:9002"
     networks:
