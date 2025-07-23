@@ -49,9 +49,8 @@ services:
   backend-md:
     build: ./backend-md
     container_name: backend-md
-    environment:
-      - NODE_ENV=production
-      - PORT=9001
+    env_file:
+      - ./backend-md/.env.docker
     ports:
       - "9001:9001"
     networks:
@@ -60,8 +59,8 @@ services:
   backend-ryo:
     build: ./backend-ryo
     container_name: backend-ryo
-    environment:
-      - DJANGO_SETTINGS_MODULE=core.settings
+    env_file:
+      - ./backend-ryo/.env
     ports:
       - "9002:9002"
     networks:
