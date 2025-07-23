@@ -1,0 +1,60 @@
+#!/bin/bash
+# kong-setup-new.sh
+
+echo "🔧 Setting up Kong services and routes..."
+
+# Wait for Kong to be ready
+echo "Waiting for Kong to be ready..."
+until $(curl --output /dev/null --silent --head --fail http://localhost:8001); do
+    printf '.'
+    sleep 5
+done
+echo "Kong is ready!"
+
+# Create backend-ryo service
+echo "Creating backend-ryo service..."
+curl -i -X POST http://localhost:8001/services/ \
+  --data "name=backend-ryo" \
+  --data "url=http://backend-ryo:9002"
+
+# Create route for backend-ryo (matches Django's FORCE_SCRIPT_NAME)
+echo "Creating backend-ryo route..."
+curl -i -X POST http://localhost:8001/services/backend-ryo/routes \
+  --data "paths[]=/ryo-api" \
+  --data "strip_path=false"
+
+# Create backend-md service
+echo "Creating backend-md service..."
+curl -i -X POST http://localhost:8001/services/ \
+  --data "name=backend-md" \
+  --data "url=http://backend-md:9001"
+
+# Create route for backend-md
+echo "Creating backend-md route..."
+curl -i -X POST http://localhost:8001/services/backend-md/routes \
+  --data "paths[]=/md-api" \
+  --data "strip_path=true"
+
+# Add rate limiting plugin (optional)
+echo "Adding rate limiting..."
+curl -i -X POST http://localhost:8001/plugins/ \
+  --data "name=rate-limiting" \
+  --data "config.minute=1000" \
+  --data "config.hour=10000"
+
+# Add CORS plugin
+echo "Adding CORS plugin..."
+curl -i -X POST http://localhost:8001/plugins/ \
+  --data "name=cors" \
+  --data "config.origins=https://api.kcsi.id,https://ryo.kcsi.id,https://apiryo.kcsi.id" \
+  --data "config.methods=GET,POST,PUT,DELETE,OPTIONS" \
+  --data "config.headers=Accept,Accept-Version,Content-Length,Content-MD5,Content-Type,Date,X-Auth-Token,Authorization"
+
+echo "✅ Kong services and routes configured!"
+echo ""
+echo "Available endpoints:"
+echo "- https://api.kcsi.id/ryo-api/api/docs/ → Backend-RYO"
+echo "- https://api.kcsi.id/md-api/ → Backend-MD"
+echo "- https://api.kcsi.id/grafana/ → Grafana"
+echo "- https://api.kcsi.id/prometheus/ → Prometheus"
+echo "- https://api.kcsi.id/kong-admin/ → Kong Admin API"

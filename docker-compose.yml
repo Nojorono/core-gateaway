@@ -66,10 +66,6 @@ services:
     container_name: backend-ryo
     env_file:
       - ./backend-ryo/.env
-    volumes:
-      - ./backend/media:/app/media
-      # - static_volume:/app/staticfiles  # Mount static files volume
-      - ./staticfiles:/app/staticfiles  # Mount for WSL Nginx access
     ports:
       - "9002:9002"
     networks:
@@ -78,15 +74,15 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       # Mount static files untuk nginx
-      - ./backend-ryo/media:/app/media
-      - ./backend-ryo/staticfiles:/app/staticfiles
+      - /opt/backend-ryo/staticfiles:/app/staticfiles
+      - /opt/backend-ryo/media:/app/media
     restart: unless-stopped
 
   grafana:
     image: grafana/grafana
     container_name: grafana
     environment:
-      - GF_SERVER_ROOT_URL=http://api.kcsi.id/grafana/
+      - GF_SERVER_ROOT_URL=https://api.kcsi.id/grafana/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
       - GF_SERVER_HTTP_PORT=3000
       - GF_SECURITY_ADMIN_PASSWORD=admin123
@@ -104,6 +100,7 @@ services:
     container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
     ports:
       - "9090:9090"
     networks:
@@ -112,6 +109,7 @@ services:
 
 volumes:
   grafana-data:
+  prometheus-data:
 
 networks:
   kong-net:
