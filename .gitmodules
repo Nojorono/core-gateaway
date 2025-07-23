@@ -5,4 +5,4 @@
 [submodule "backend-ryo"]
 	path = backend-ryo
 	url = https://github.com/Nojorono/voucher_be.git
-        branch = update-wholesales-tree
+        branch = main
