@@ -67,10 +67,10 @@ if [ ! -f "./nginx/api.kcsi.id.conf" ]; then
     print_error "Configuration file ./nginx/api.kcsi.id.conf not found!"
     exit 1
 fi
-$SUDO cp ./nginx/api.kcsi.id.conf /etc/nginx/sites-available/api.kcsi.id
+$SUDO cp ./nginx/api.kcsi.id.conf /etc/nginx/sites-available/api.kcsi.id.conf
 
 # Set proper permissions
-$SUDO chmod 644 /etc/nginx/sites-available/api.kcsi.id
+$SUDO chmod 644 /etc/nginx/sites-available/api.kcsi.id.conf
 
 print_success "Configuration files deployed successfully"
 
@@ -85,7 +85,7 @@ $SUDO chmod -R 755 /opt/backend-ryo
 
 # Enable sites by creating symlinks
 print_status "Enabling api.kcsi.id site..."
-$SUDO ln -sf /etc/nginx/sites-available/api.kcsi.id /etc/nginx/sites-enabled/
+$SUDO ln -sf /etc/nginx/sites-available/api.kcsi.id.conf /etc/nginx/sites-enabled/
 
 # Disable default Nginx site if it exists
 if [ -f "/etc/nginx/sites-enabled/default" ]; then
