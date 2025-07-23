@@ -21,7 +21,7 @@ curl -i -X POST http://localhost:8001/services/ \
 echo "Creating backend-ryo route..."
 curl -i -X POST http://localhost:8001/services/backend-ryo/routes \
   --data "paths[]=/ryo-api" \
-  --data "strip_path=false"
+  --data "strip_path=true"
 
 # Create backend-md service
 echo "Creating backend-md service..."
