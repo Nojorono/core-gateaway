@@ -5,13 +5,12 @@ scrape_configs:
   - job_name: 'kong'
     metrics_path: /metrics
     static_configs:
-      - targets: ['kong:8001'] 
-  - job_name: 'wms-backend-api'
+      - targets: ['kong:8001']
+  - job_name: 'backend-md'
     metrics_path: /metrics
     static_configs:
-      - targets: ['wms-backend:80']
-  - job_name: 'sofia-backend-api'
+      - targets: ['backend-md:9001']
+  - job_name: 'backend-ryo'
     metrics_path: /metrics
     static_configs:
-      - targets: ['sofia-backend:80']
-  - job_name: 'md-backend-api'
+      - targets: ['backend-ryo:9002']
