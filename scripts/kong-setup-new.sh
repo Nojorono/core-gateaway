@@ -13,7 +13,7 @@ until $(curl --output /dev/null --silent --head --fail $KONG_ADMIN_URL); do
 done
 echo "Kong is ready!"
 
-# Create backend-ryo service
+# ✅ FIX: Create backend-ryo service dengan strip_path=false
 echo "Creating backend-ryo service..."
 curl -i -X POST $KONG_ADMIN_URL/services/ \
   --data "name=backend-ryo" \
@@ -23,7 +23,7 @@ curl -i -X POST $KONG_ADMIN_URL/services/ \
 echo "Creating backend-ryo route..."
 curl -i -X POST $KONG_ADMIN_URL/services/backend-ryo/routes \
   --data "paths[]=/ryo-api" \
-  --data "strip_path=true"
+  --data "strip_path=false"
 
 # Create backend-md service
 echo "Creating backend-md service..."
@@ -55,8 +55,8 @@ curl -i -X POST $KONG_ADMIN_URL/plugins/ \
 echo "✅ Kong services and routes configured!"
 echo ""
 echo "Available endpoints:"
-echo "- https://api.kcsi.id/ryo-api/api/docs/ → Backend-RYO"
-echo "- https://api.kcsi.id/md-api/ → Backend-MD"
-echo "- https://api.kcsi.id/grafana/ → Grafana"
-echo "- https://api.kcsi.id/prometheus/ → Prometheus"
-echo "- https://api.kcsi.id/kong-admin/ → Kong Admin API"
+echo "- http://api.kcsi.id/ryo-api/api/docs/ → Backend-RYO"
+echo "- http://api.kcsi.id/md-api/ → Backend-MD"
+echo "- http://api.kcsi.id/grafana/ → Grafana"
+echo "- http://api.kcsi.id/prometheus/ → Prometheus"
+echo "- http://api.kcsi.id/kong-admin/ → Kong Admin API"
