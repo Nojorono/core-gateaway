@@ -1,4 +1,4 @@
-    [submodule "backend-md"]
+[submodule "backend-md"]
 	path = backend-md
 	url = https://github.com/Nojorono/backend-md.git
         branch = main
