@@ -119,8 +119,25 @@ echo "🌐 Adding CORS plugin..."
 RESPONSE=$(curl -s -X POST $KONG_ADMIN_URL/plugins/ \
   --data "name=cors" \
   --data "config.origins=*" \
-  --data "config.methods=GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH" \
-  --data "config.headers=Accept,Accept-Version,Content-Length,Content-MD5,Content-Type,Date,X-Auth-Token,Authorization,X-Forwarded-For,X-Forwarded-Proto,X-Forwarded-Prefix,X-Script-Name" \
+  --data "config.methods[]=GET" \
+  --data "config.methods[]=POST" \
+  --data "config.methods[]=PUT" \
+  --data "config.methods[]=DELETE" \
+  --data "config.methods[]=OPTIONS" \
+  --data "config.methods[]=HEAD" \
+  --data "config.methods[]=PATCH" \
+  --data "config.headers[]=Accept" \
+  --data "config.headers[]=Accept-Version" \
+  --data "config.headers[]=Content-Length" \
+  --data "config.headers[]=Content-MD5" \
+  --data "config.headers[]=Content-Type" \
+  --data "config.headers[]=Date" \
+  --data "config.headers[]=X-Auth-Token" \
+  --data "config.headers[]=Authorization" \
+  --data "config.headers[]=X-Forwarded-For" \
+  --data "config.headers[]=X-Forwarded-Proto" \
+  --data "config.headers[]=X-Forwarded-Prefix" \
+  --data "config.headers[]=X-Script-Name" \
   --data "config.credentials=true" \
   --data "config.max_age=3600")
 
