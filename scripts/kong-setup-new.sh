@@ -90,7 +90,7 @@ fi
 # Create route for backend-md
 echo "🛣️ Creating backend-md route..."
 RESPONSE=$(curl -s -X POST $KONG_ADMIN_URL/services/backend-md/routes \
-  --data "paths[]=/md-api" \
+  --data "paths[]=/md-backend-api" \
   --data "strip_path=true" \
   --data "preserve_host=false")
 
