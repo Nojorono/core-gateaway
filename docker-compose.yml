@@ -78,6 +78,18 @@ services:
       - /opt/backend-ryo/media:/app/media
     restart: unless-stopped
 
+  service-meta:
+    build:
+      context: ./service-meta
+      dockerfile: Dockerfile
+    ports:
+      - "9003:9003"
+    env_file:
+      - ./service-meta/.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
   grafana:
     image: grafana/grafana
     container_name: grafana
