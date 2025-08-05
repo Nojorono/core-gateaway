@@ -87,14 +87,6 @@ services:
       - GF_SERVER_HTTP_PORT=3000
       - GF_SECURITY_ADMIN_PASSWORD=admin123
       - GF_SECURITY_ALLOW_EMBEDDING=true
-      # ✅ IMPORTANT: These fix the redirect issue
-      - GF_SERVER_DOMAIN=api.kcsi.id
-      - GF_SERVER_PROTOCOL=http
-      - GF_SERVER_ENFORCE_DOMAIN=false
-      - GF_AUTH_DISABLE_LOGIN_FORM=false
-      - GF_AUTH_DISABLE_SIGNOUT_MENU=false
-      # ✅ Fix for sub-path routing
-      - GF_SERVER_ROUTER_LOGGING=true
     ports:
       - "3000:3000"
     networks:
