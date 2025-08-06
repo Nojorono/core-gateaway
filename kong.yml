@@ -1,0 +1,61 @@
+_format_version: "3.0"
+services:
+  - name: backend-md-api
+    url: http://backend-md:9001
+    routes:
+      - name: backend-md-api-route
+        paths:
+          - /md-backend-api
+        strip_path: true
+        protocols:
+          - http
+          - https
+    plugins:
+      - name: prometheus
+      - name: rate-limiting
+        config:
+          minute: 60
+      - name: cors
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 128
+
+  - name: backend-ryo-api
+    url: http://backend-ryo:9002
+    routes:
+      - name: backend-ryo-api-route
+        paths:
+          - /ryo-api
+        strip_path: false
+        protocols:
+          - http
+          - https
+    plugins:
+      - name: prometheus
+      - name: rate-limiting
+        config:
+          minute: 60
+      - name: cors
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 128
+
+  - name: service-meta
+    url: http://service-meta:9003
+    routes:
+      - name: service-meta-route
+        paths:
+          - /service-meta
+        strip_path: true
+        protocols:
+          - http
+          - https
+    plugins:
+      - name: prometheus
+      - name: rate-limiting
+        config:
+          minute: 60
+      - name: cors
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 128 
