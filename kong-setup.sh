@@ -16,6 +16,11 @@ curl -i -X POST $KONG_ADMIN_URL/services \
   --data name=backend-ryo-api \
   --data url='http://backend-ryo:9002'
 
+# Add meta service
+curl -i -X POST $KONG_ADMIN_URL/services \
+  --data name=meta-api \
+  --data url='http://service-meta:9003'
+
 # Add prefixed route for backend-md
 curl -i -X POST $KONG_ADMIN_URL/services/backend-md-api/routes \
   --data 'paths[]=/md-backend-api' \
@@ -24,6 +29,11 @@ curl -i -X POST $KONG_ADMIN_URL/services/backend-md-api/routes \
 # Add prefixed route for backend-ryo
 curl -i -X POST $KONG_ADMIN_URL/services/backend-ryo-api/routes \
   --data 'paths[]=/ryo-backend-api' \
+  --data 'strip_path=true'
+
+# Add prefixed route for meta service
+curl -i -X POST $KONG_ADMIN_URL/services/meta-api/routes \
+  --data 'paths[]=/meta-api' \
   --data 'strip_path=true'
 
 # Plugins for backend-md
