@@ -9,4 +9,4 @@
 [submodule "service-meta"]
 	path = service-meta
 	url = https://github.com/Nojorono/meta-service.git
-	branch = dual-access-control
+	branch = master
