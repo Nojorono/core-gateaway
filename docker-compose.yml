@@ -83,12 +83,11 @@ services:
     build: ./service-meta
     container_name: service-meta
     env_file:
-      - ./service-meta/.env.docker
+      - ./service-meta/.env
     ports:
       - "9003:9003"
     networks:
       - kong-net
-      - backend-core_default
     restart: unless-stopped
 
   grafana:
