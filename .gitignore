@@ -7,3 +7,4 @@ backend-ryo/media/
 */media/
 
 *-old*
+node-modules/
