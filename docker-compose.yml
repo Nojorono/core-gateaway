@@ -80,15 +80,36 @@ services:
     restart: unless-stopped
 
   service-meta:
-    build: ./service-meta
+    build:
+      context: ./service-meta
+      dockerfile: Dockerfile  # Use production Dockerfile, not Dockerfile.dev
     container_name: service-meta
     env_file:
-      - ./service-meta/.env
+      - ./service-meta/.env  # Use production env file
     ports:
       - "9003:9003"
-    networks:
-      - kong-net
+    environment:
+      - NODE_ENV=production  # Production environment
+      - ORA_SDTZ=UTC
+      # Oracle Instant Client paths (match Dockerfile)
+      - LD_LIBRARY_PATH=/opt/oracle/instantclient
+      - ORACLE_HOME=/opt/oracle/instantclient
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "metauatdb.nna.net:host-gateway"
     restart: unless-stopped
+    # Production optimizations
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
+          cpus: '0.5'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9003/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   grafana:
     image: grafana/grafana
@@ -124,5 +145,3 @@ volumes:
 networks:
   kong-net:
     driver: bridge
-  backend-core_default:
-    external: true
