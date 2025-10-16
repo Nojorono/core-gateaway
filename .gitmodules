@@ -10,3 +10,7 @@
 	path = service-meta
 	url = https://github.com/Nojorono/meta-service.git
 	branch = master
+[submodule "backend-wms"]
+	path = backend-wms
+	url = https://github.com/Nojorono/backend-wms-cwh.git
+	branch = main
