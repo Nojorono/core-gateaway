@@ -18,3 +18,7 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets: ['service-meta:9003']
+  - job_name: 'service-wms'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['service-wms:9004']

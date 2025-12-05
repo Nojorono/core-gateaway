@@ -2,12 +2,26 @@
 
 Arsitektur ini menggunakan Kong sebagai API Gateway untuk mengatur routing dan autentikasi ke beberapa backend service sesuai diagram.
 
+## Documentation
+
+- **[Sequence Diagrams Overview](SEQUENCE_DIAGRAMS.md)** - Complete system integration diagrams
+- **[Sequence Diagrams Index](SEQUENCE_DIAGRAMS_INDEX.md)** - Quick reference to all diagrams
+- **[Sequence Diagrams Summary](SEQUENCE_DIAGRAMS_SUMMARY.md)** - Comprehensive summary of all diagrams
+- **[Architecture Summary](ARCHITECTURE_SUMMARY.md)** - System architecture documentation
+
+### Service-Specific Sequence Diagrams
+
+- **[Backend-WMS Diagrams](backend-wms/WMS_SEQUENCE_DIAGRAM.md)** - Warehouse Management System flows
+- **[Backend-MD Diagrams](backend-md/MD_SEQUENCE_DIAGRAM.md)** - Marketing Dashboard flows
+- **[Backend-RYO Diagrams](backend-ryo/RYO_SEQUENCE_DIAGRAM.md)** - Retailer Yield Optimization flows
+- **[Service-Meta Diagrams](service-meta/META_SEQUENCE_DIAGRAM.md)** - Master Data Service flows
+
 ## Struktur
 - **Kong Gateway** (port 8000/8001)
-- **Postgres** (untuk database Kong)
-- **wms-backend** (contoh backend)
-- **sofia-backend** (contoh backend)
-- **md-backend** (contoh backend)
+- **backend-wms** - Warehouse Management System (NestJS)
+- **backend-md** - Marketing Dashboard (NestJS + Drizzle)
+- **backend-ryo** - Retailer Yield Optimization (Django)
+- **service-meta** - Master Data Service (NestJS + Oracle)
 
 ## Cara Menjalankan
 
