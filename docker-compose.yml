@@ -79,26 +79,37 @@ services:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
 
+  backend-wms:
+    build: ./backend-wms
+    container_name: backend-wms
+    env_file:
+      - ./backend-wms/.env
+    ports:
+      - "9004:9004"
+    networks:
+      - kong-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
   service-meta:
     build:
       context: ./service-meta
-      dockerfile: Dockerfile  # Use production Dockerfile, not Dockerfile.dev
+      dockerfile: Dockerfile  # Use the fixed Dockerfile
     container_name: service-meta
     env_file:
-      - ./service-meta/.env  # Use production env file
+      - ./service-meta/.env
     ports:
       - "9003:9003"
     environment:
-      - NODE_ENV=production  # Production environment
-      - ORA_SDTZ=UTC
-      # Oracle Instant Client paths (match Dockerfile)
-      - LD_LIBRARY_PATH=/opt/oracle/instantclient
-      - ORACLE_HOME=/opt/oracle/instantclient
+      NODE_ENV: production
+      ORA_SDTZ: UTC
+      LD_LIBRARY_PATH: /opt/oracle/instantclient
+      ORACLE_HOME: /opt/oracle/instantclient
     extra_hosts:
       - "host.docker.internal:host-gateway"
       - "metauatdb.nna.net:host-gateway"
     restart: unless-stopped
-    # Production optimizations
     deploy:
       resources:
         limits:

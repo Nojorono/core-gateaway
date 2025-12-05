@@ -13,4 +13,4 @@
 [submodule "backend-wms"]
 	path = backend-wms
 	url = https://github.com/Nojorono/backend-wms-cwh.git
-	branch = main
+	branch = ch

@@ -18,8 +18,13 @@ curl -i -X POST $KONG_ADMIN_URL/services \
 
 # Add meta service
 curl -i -X POST $KONG_ADMIN_URL/services \
-  --data name=meta-api \
+  --data name=service-meta \
   --data url='http://service-meta:9003'
+
+# Add wms service
+curl -i -X POST $KONG_ADMIN_URL/services \
+  --data name=service-wms \
+  --data url='http://service-wms:9004'
 
 # Add prefixed route for backend-md
 curl -i -X POST $KONG_ADMIN_URL/services/backend-md-api/routes \
@@ -36,6 +41,11 @@ curl -i -X POST $KONG_ADMIN_URL/services/meta-api/routes \
   --data 'paths[]=/meta-api' \
   --data 'strip_path=true'
 
+# Add prefixed route for wms service
+curl -i -X POST $KONG_ADMIN_URL/services/wms-api/routes \
+  --data 'paths[]=/wms-api' \
+  --data 'strip_path=true'
+
 # Plugins for backend-md
 curl -i -X POST $KONG_ADMIN_URL/services/backend-md-api/plugins --data "name=prometheus"
 curl -i -X POST $KONG_ADMIN_URL/services/backend-md-api/plugins --data "name=rate-limiting" --data "config.minute=60"
@@ -47,5 +57,17 @@ curl -i -X POST $KONG_ADMIN_URL/services/backend-ryo-api/plugins --data "name=pr
 curl -i -X POST $KONG_ADMIN_URL/services/backend-ryo-api/plugins --data "name=rate-limiting" --data "config.minute=60"
 curl -i -X POST $KONG_ADMIN_URL/services/backend-ryo-api/plugins --data "name=cors"
 curl -i -X POST $KONG_ADMIN_URL/services/backend-ryo-api/plugins --data "name=request-size-limiting" --data "config.allowed_payload_size=128"
+
+# Plugins for wms service
+curl -i -X POST $KONG_ADMIN_URL/services/wms-api/plugins --data "name=prometheus"
+curl -i -X POST $KONG_ADMIN_URL/services/wms-api/plugins --data "name=rate-limiting" --data "config.minute=60"
+curl -i -X POST $KONG_ADMIN_URL/services/wms-api/plugins --data "name=cors"
+curl -i -X POST $KONG_ADMIN_URL/services/wms-api/plugins --data "name=request-size-limiting" --data "config.allowed_payload_size=128"
+
+# Plugins for meta service
+curl -i -X POST $KONG_ADMIN_URL/services/meta-api/plugins --data "name=prometheus"
+curl -i -X POST $KONG_ADMIN_URL/services/meta-api/plugins --data "name=rate-limiting" --data "config.minute=60"
+curl -i -X POST $KONG_ADMIN_URL/services/meta-api/plugins --data "name=cors"
+curl -i -X POST $KONG_ADMIN_URL/services/meta-api/plugins --data "name=request-size-limiting" --data "config.allowed_payload_size=128"
 
 echo "Kong setup selesai: Semua service menggunakan prefiks unik, plugin best practice aktif, monitoring Prometheus siap!" 
