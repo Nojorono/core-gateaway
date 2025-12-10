@@ -61,7 +61,7 @@ services:
           allowed_payload_size: 128 
 
   - name: service-wms
-    url: http://service-wms:9004
+    url: http://backend-wms:3000
     routes:
       - name: service-wms-route
         paths:
