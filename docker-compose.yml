@@ -85,7 +85,9 @@ services:
     env_file:
       - ./backend-wms/.env
     ports:
-      - "9004:9004"
+      - "9004:3000"
+    environment:
+      - PORT=3000
     networks:
       - kong-net
     extra_hosts:
