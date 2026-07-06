@@ -90,6 +90,7 @@ services:
       - PORT=3000
     networks:
       - kong-net
+      - infra-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
@@ -111,6 +112,9 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
       - "metauatdb.nna.net:host-gateway"
+    networks:
+      - kong-net
+      - infra-net
     restart: unless-stopped
     deploy:
       resources:
@@ -158,3 +162,6 @@ volumes:
 networks:
   kong-net:
     driver: bridge
+  infra-net:
+    external: true
+    name: infra-net
