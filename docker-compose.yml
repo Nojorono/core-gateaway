@@ -60,6 +60,7 @@ services:
       - "9001:9001"
     networks:
       - kong-net
+      - infra-net
     restart: unless-stopped
 
   backend-ryo:
@@ -75,6 +76,7 @@ services:
       - "9002:9002"
     networks:
       - kong-net
+      - infra-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
@@ -88,6 +90,7 @@ services:
       - "9004:9004"
     networks:
       - kong-net
+      - infra-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
@@ -109,6 +112,9 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
       - "metauatdb.nna.net:host-gateway"
+    networks:
+      - kong-net
+      - infra-net
     restart: unless-stopped
     deploy:
       resources:
@@ -156,3 +162,6 @@ volumes:
 networks:
   kong-net:
     driver: bridge
+  infra-net:
+    external: true
+    name: infra-net
